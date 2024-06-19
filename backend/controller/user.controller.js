@@ -74,9 +74,12 @@ const loginUser = asyncHandler(async(req,res)=>{
     const token = jwt.sign({id: user._id},process.env.SECRET,{expiresIn: "3d"});
     console.log('Generated Token:', token);
     const info = await User.findById(user._id).select("-password");
-    return res.cookie("token",token).status(201).json(
-        new ApiResponse(201,info,"user is logedin")
-    )
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',  // Set secure flag in production
+        sameSite: 'strict'
+    });
+    return res.status(201).json(new ApiResponse(201, info, "user is logged in"));
 })
 
 const logoutUser = asyncHandler(async(req,res)=>{
