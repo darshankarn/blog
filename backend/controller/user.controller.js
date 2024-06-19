@@ -72,6 +72,7 @@ const loginUser = asyncHandler(async(req,res)=>{
         throw new ApiError(401,"Wrong credentials");
     }
     const token = jwt.sign({id: user._id},process.env.SECRET,{expiresIn: "3d"});
+    console.log('Generated Token:', token);
     const info = await User.findById(user._id).select("-password");
     return res.cookie("token",token).status(201).json(
         new ApiResponse(201,info,"user is logedin")
