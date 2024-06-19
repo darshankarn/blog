@@ -3,17 +3,12 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 const app = express();
 
-const corsOptions = {
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-    maxAge: 1800,
-    allowedHeaders: ['content-type'],
-    methods: ['PUT', 'POST','GET', 'DELETE', 'PATCH', 'OPTIONS']
-};
+app.use(cors({
+    origin: process.env.CORS_ORIGIN, // Adjust this to your frontend domain
+    credentials: true
+}));
 
-app.use(cors(corsOptions));
-
-
+console.log(process.env.CORS_ORIGIN);
 
 app.use(express.json({
     limit: "16kb"
