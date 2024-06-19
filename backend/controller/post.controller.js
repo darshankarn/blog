@@ -63,7 +63,7 @@ const getUserPosts = asyncHandler(async(req,res)=>{
 //upload image
 const uploadImage = asyncHandler(async(req,res)=>{
     const imgpath = req.file?.path;
-    console.log(imgpath)
+    // console.log(imgpath)
     if(!imgpath){
         throw new ApiError(400,"Image not found");
     }
