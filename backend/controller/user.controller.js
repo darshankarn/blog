@@ -77,7 +77,7 @@ const loginUser = asyncHandler(async(req,res)=>{
     res.cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',  // Set secure flag in production
-        sameSite: 'strict'
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax'
     });
     return res.status(201).json(new ApiResponse(201, info, "user is logged in"));
 })
