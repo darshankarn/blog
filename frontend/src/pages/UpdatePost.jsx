@@ -7,7 +7,8 @@ import { UserContext } from "../context/user.context"
 import axios from "axios"
 import { URL } from "../url"
 import Loader from "../components/Loader"
-
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'
 
 function UpdatePost() {
 
@@ -39,6 +40,26 @@ function UpdatePost() {
     }
     const [cat, setCat] = useState("");
     const [cats, setCats] = useState([]);
+
+    const modules = {
+        toolbar: [
+            [{ 'font': [] }],
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'align': [] }],
+            ['link'],
+        ],
+    };
+
+    const formats = [
+        'font',
+        'header',
+        'bold', 'italic', 'underline', 'strike',
+        'list', 'bullet',
+        'align',
+        'link',
+    ];
 
     const deleteCat = (i) => {
         let updateCats = [...cats];
@@ -128,7 +149,14 @@ function UpdatePost() {
                             ))}
                         </div>
                     </div>
-                    <textarea value={desc} onChange={(e) => setDesc(e.target.value)} rows={15} cols={30} className="px-4 py-2 outline-none" placeholder="Enter Post Discription" />
+                    <ReactQuill
+                                value={desc} // Make sure you have a state variable called `desc`
+                                onChange={setDesc} // Directly set the description
+                                modules={modules}
+                                formats={formats}
+                                className="px-4 py-2 outline-none"
+                                placeholder="Enter Post Description"
+                    />
                     <button onClick={handleEdit} className="bg-black w-full md:w-[20%] mx-auto text-white font-semibold px-4 py-2 md:text-xl text-lg rounded-md">Update Post</button>
                 </form>
             </div>
