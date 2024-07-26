@@ -7,6 +7,8 @@ import axios from "axios";
 import { URL } from "../url";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'
 
 
 function CreatePost() {
@@ -20,6 +22,26 @@ function CreatePost() {
 
     const [cat,setCat] = useState("");
     const [cats,setCats] = useState([]);
+
+    const modules = {
+        toolbar: [
+            [{ 'font': [] }],
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'align': [] }],
+            ['link'],
+        ],
+    };
+
+    const formats = [
+        'font',
+        'header',
+        'bold', 'italic', 'underline', 'strike',
+        'list', 'bullet',
+        'align',
+        'link',
+    ];
 
     const deleteCat = (i)=>{
         let updateCats = [...cats];
@@ -105,7 +127,15 @@ function CreatePost() {
                             ))}
                         </div>
                     </div>
-                    <textarea onChange={(e)=>setDesc(e.target.value)} rows={15} cols={30} className="px-4 py-2 outline-none" placeholder="Enter Post Discription"/>
+                    <ReactQuill
+                                value={desc} // Make sure you have a state variable called `desc`
+                                onChange={setDesc} // Directly set the description
+                                modules={modules}
+                                formats={formats}
+                                className="px-4 py-2 outline-none"
+                                placeholder="Enter Post Description"
+                    />
+                    {/* <textarea onChange={(e)=>setDesc(e.target.value)} rows={15} cols={30} className="px-4 py-2 outline-none" placeholder="Enter Post Discription"/> */}
                     <button type="submit" className="bg-black w-full md:w-[20%] mx-auto text-white font-semibold px-4 py-2 md:text-xl text-lg rounded-md hover:bg-gray-500">Create Post</button>
                 </form>
             </div>
