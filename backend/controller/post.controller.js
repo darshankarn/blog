@@ -12,7 +12,7 @@ const createPost = asyncHandler(async(req,res)=>{
         const savedPost = await newPost.save();
         return res.status(200).json(new ApiResponse(201,savedPost,"post created suceessfully"))
     } catch (error) {
-        return res.status(500).json(err);
+        return res.status(500).json(error);
     }
 })
 
